@@ -38,15 +38,20 @@ func recognizeTextHandler(request: VNRequest, error: Error?) {
 }
 
 
+let usage="USAGE:\n        ./ocr <PNG_FILE>"
 
-let arguments = CommandLine.arguments
+let args = CommandLine.arguments
+if args.count < 2 {
+    print(usage)
+}
 
 enum LoadError: Error {
      case couldNotLoadPNG
 }
-guard let img = loadPNGAsCGImage(from: arguments[1]) else { 
-    let e = "Could not load as PNG: "+arguments[1]
+guard let img = loadPNGAsCGImage(from: args[1]) else { 
+    let e = "Could not load as PNG: "+args[1]
     print(e)
+    print(usage)
     throw LoadError.couldNotLoadPNG
 }
 
